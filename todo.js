@@ -4,7 +4,31 @@ const ul = document.querySelector(".list-group");
 const warn = document.querySelector("#warn");
 const success = document.querySelector("#success");
 
-form.addEventListener("submit", addTodo);
+function allEventListeners(){
+    //Butun event-leri bura yaziram
+    form.addEventListener("submit", addTodo);
+    document.addEventListener("DOMContentLoaded",pageLoaded);
+    document.addEventListener("click",deleteTodo);
+
+}
+allEventListeners();
+function deleteTodo(e){
+    if(e.target.className === "fa fa-remove"){
+        e.target.parentElement.parentElement.remove();
+        deleteTodoFromStorage(e.target.parentElement.parentElement.textContent);
+        e.preventDefault();
+    }
+}
+function deleteTodoFromStorage(deletetodo){
+    let todos = getTodoFromStorage();
+    todos.forEach(function(todo,index){
+        if(todo === deletetodo){
+            todos.splice(index,1); //Array-den sildim
+        }
+    });
+    localStorage.setItem("todos",JSON.stringify(todos));
+}
+
 function addTodo(e) {
     const newTodo = todoInput.value.trim();
     // trim() soldan ve sagdan bosluqlari kesmek ucun
@@ -26,12 +50,13 @@ function addTodo(e) {
 
     e.preventDefault();
 }
-document.addEventListener("DOMContentLoaded",function run(){ //Sehife yenilendikde local storage-den olan todo-lari saxliyir
+function pageLoaded(){ 
+    //Sehife yenilendikde local storage-den olan todo-lari saxliyir
     let todos = getTodoFromStorage();
     todos.forEach(function(todo){
         addTodoToUI(todo);
     })
-})
+}
 function getTodoFromStorage(){
     let todos;
     if(localStorage.getItem("todos") === null){
@@ -42,7 +67,8 @@ function getTodoFromStorage(){
     }
     return todos;
 }
-function addTodoToStorage(newTodo){ //Local storage-e todolari gonderir
+function addTodoToStorage(newTodo){ 
+    //Local storage-e todolari gonderir
     let todos = getTodoFromStorage();
     todos.push(newTodo);
     localStorage.setItem("todos",JSON.stringify(todos));
