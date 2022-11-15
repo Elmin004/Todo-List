@@ -3,9 +3,10 @@ const form = document.querySelector("#todo-form");
 const ul = document.querySelector(".list-group");
 const warn = document.querySelector("#warn");
 const success = document.querySelector("#success");
+const different = document.querySelector("#no-similar");
 const filter = document.querySelector("#todo-search");
 const button = document.querySelector("#clear-todos");
-
+let notRepeat;
 
 function allEventListeners(){
     //Butun event-leri bura yaziram
@@ -73,12 +74,25 @@ function addTodo(e) {
         },2000);
     }
     else {
+        if(notRepeat === null){
+            notRepeat = "";   // tekrar todo-nun qarsisini almaq ucun
+        }
+        if(newTodo === notRepeat){
+            different.setAttribute("style","display: block");
+            setTimeout(function(){
+                different.style.display = "none";
+            },2000);
+        }
+        else{
+            
         addTodoToUI(newTodo);
         addTodoToStorage(newTodo);
+        notRepeat = newTodo;
         success.style.display = "block";
         setTimeout(function(){
             success.style.display = "none";
         },2000);
+        }
     }
 
     e.preventDefault();
