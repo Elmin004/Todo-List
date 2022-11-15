@@ -3,15 +3,48 @@ const form = document.querySelector("#todo-form");
 const ul = document.querySelector(".list-group");
 const warn = document.querySelector("#warn");
 const success = document.querySelector("#success");
+const filter = document.querySelector("#todo-search");
+const button = document.querySelector("#clear-todos");
+
 
 function allEventListeners(){
     //Butun event-leri bura yaziram
     form.addEventListener("submit", addTodo);
     document.addEventListener("DOMContentLoaded",pageLoaded);
     document.addEventListener("click",deleteTodo);
-
+    filter.addEventListener("keyup",filterTodos);
+    button.addEventListener("click",clearTodos);
 }
 allEventListeners();
+function clearTodos(e){
+    if(confirm("Silmek istediyinizden eminsiniz?")){
+        // ul.innerHTML = ""; Kicik proyektlerde
+        while(ul.firstElementChild){    // or (ul.firstElementChild != null){}
+            ul.removeChild(ul.firstElementChild);
+        }  //bura kimi front terefden silmek idi
+        // hamisini local storage-den silmek
+        localStorage.removeItem("todos");
+
+    }
+}
+
+function filterTodos(e){
+    //todo-lari filtrleme
+    const filterValue = e.target.value.toLowerCase();
+    const listItems = document.querySelectorAll(".list-group-item");
+
+    listItems.forEach(function(listItem){
+        const text = listItem.textContent.toLowerCase();
+        if(text.indexOf(filterValue) === -1){
+            //tapilmir
+            listItem.setAttribute("style","display: none !important");
+        }
+        else{
+            //tapilir
+            listItem.setAttribute("style","display: block");
+        }
+    })
+}
 function deleteTodo(e){
     if(e.target.className === "fa fa-remove"){
         e.target.parentElement.parentElement.remove();
