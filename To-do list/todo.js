@@ -50,7 +50,7 @@ function addTodo(e) {
 
     e.preventDefault();
 }
-function pageLoaded(){ 
+function pageLoaded(){
     //Sehife yenilendikde local storage-den olan todo-lari saxliyir
     let todos = getTodoFromStorage();
     todos.forEach(function(todo){
@@ -64,6 +64,7 @@ function getTodoFromStorage(){
     }
     else{
         todos = JSON.parse(localStorage.getItem("todos"));
+        //Stringe cevirdim
     }
     return todos;
 }
@@ -71,7 +72,8 @@ function addTodoToStorage(newTodo){
     //Local storage-e todolari gonderir
     let todos = getTodoFromStorage();
     todos.push(newTodo);
-    localStorage.setItem("todos",JSON.stringify(todos));
+    localStorage.setItem("todos",JSON.stringify(todos));  
+    //JSON.stringify Array-e donusdurmek ucundu
 }
 
 function addTodoToUI(newTodo) {
