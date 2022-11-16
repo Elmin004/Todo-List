@@ -11,3 +11,9 @@
 .input-group:focus{
     border: 2px solid navy;
 }
+.list-group-item{
+    overflow: auto;
+}
+.fa{
+    margin-left: 8px;
+}
