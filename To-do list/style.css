@@ -2,7 +2,9 @@
     margin: 0;
     padding: 0;
     outline: none;
+    box-sizing: border-box;
     text-decoration: none;
+    font-family: sans-serif;
 }
 .input-group{
     padding: 4px 10px;
@@ -12,8 +14,9 @@
     border: 2px solid navy;
 }
 .list-group-item{
-    overflow: auto;
+    word-wrap: break-word;
+    word-break: break-all;
 }
 .fa{
-    margin-left: 8px;
+    margin-left: 10px;
 }
